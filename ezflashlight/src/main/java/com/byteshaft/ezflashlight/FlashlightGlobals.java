@@ -16,28 +16,26 @@
  *
  */
 
-apply plugin: 'com.android.application'
+package com.byteshaft.ezflashlight;
 
-android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+public class FlashlightGlobals {
 
-    defaultConfig {
-        minSdkVersion 10
-        targetSdkVersion 21
-        versionCode 1
-        versionName "0.8"
+    private static boolean isFlashlightOn = false;
+    private static boolean isResourceOccupied = false;
+
+    static void setIsFlashlightOn(boolean on) {
+        isFlashlightOn = on;
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-}
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile project(":ezflashlight")
+    public static boolean isFlashlightOn() {
+        return isFlashlightOn;
+    }
+
+    static void setIsResourceOccupied(boolean occupied) {
+        isResourceOccupied = occupied;
+    }
+
+    public static boolean isResourceOccupied() {
+        return isResourceOccupied;
+    }
 }
