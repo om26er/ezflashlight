@@ -1,3 +1,21 @@
+/*
+ *
+ *  *
+ *  *  * (C) Copyright 2015 byteShaft Inc.
+ *  *  *
+ *  *  * All rights reserved. This program and the accompanying materials
+ *  *  * are made available under the terms of the GNU Lesser General Public License
+ *  *  * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ *  *  * http://www.gnu.org/licenses/lgpl-2.1.html
+ *  *  *
+ *  *  * This library is distributed in the hope that it will be useful,
+ *  *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *  *  * Lesser General Public License for more details.
+ *  *  
+ *
+ */
+
 package com.byteshaft.referencetorch;
 
 import android.support.v7.app.ActionBarActivity;
@@ -6,14 +24,13 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import byteshaft.com.ezflashlight.CameraInitializationListener;
-import byteshaft.com.ezflashlight.Flashlight;
-import byteshaft.com.ezflashlight.FlashlightGlobals;
+import com.byteshaft.ezflashlight.CameraStateChangeListener;
+import com.byteshaft.ezflashlight.Flashlight;
+import com.byteshaft.ezflashlight.FlashlightGlobals;
 
 
-public
-class MainActivity extends ActionBarActivity implements ToggleButton.OnCheckedChangeListener,
-        CameraInitializationListener {
+public class MainActivity extends ActionBarActivity implements ToggleButton.OnCheckedChangeListener,
+        CameraStateChangeListener {
 
     private Flashlight mFlashlight = null;
     private ToggleButton mFlashlightToggle = null;
@@ -27,12 +44,11 @@ class MainActivity extends ActionBarActivity implements ToggleButton.OnCheckedCh
         mFlashlight = new Flashlight(this);
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
         if (!FlashlightGlobals.isResourceOccupied()) {
-            mFlashlight.setOnCameraStateChangeListener(this);
+            mFlashlight.setOnCameraStateChangedListener(this);
             mFlashlight.initializeCamera();
         }
     }
@@ -40,9 +56,7 @@ class MainActivity extends ActionBarActivity implements ToggleButton.OnCheckedCh
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (FlashlightGlobals.isFlashlightOn()) {
-            mFlashlight.turnOff();
-        }
+        mFlashlight.releaseAllResources();
     }
 
     @Override
@@ -92,12 +106,12 @@ class MainActivity extends ActionBarActivity implements ToggleButton.OnCheckedCh
     }
 
     @Override
-    public void onFlashlightOn() {
+    public void onFlashlightTurnedOn() {
 
     }
 
     @Override
-    public void onFlashlightOff() {
+    public void onFlashlightTurnedOff() {
 
     }
 }

@@ -16,28 +16,18 @@
  *
  */
 
-apply plugin: 'com.android.application'
+package com.byteshaft.ezflashlight;
 
-android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+public interface CameraStateChangeListener {
 
-    defaultConfig {
-        minSdkVersion 10
-        targetSdkVersion 21
-        versionCode 1
-        versionName "0.8"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-}
+    public void onCameraOpened();
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile project(":ezflashlight")
+    public void onCameraViewSetup();
+
+    public void onCameraBusy();
+
+    public void onFlashlightTurnedOn();
+
+    public void onFlashlightTurnedOff();
+
 }
