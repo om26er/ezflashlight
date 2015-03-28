@@ -28,6 +28,7 @@ import java.util.ArrayList;
 @SuppressWarnings("deprecation")
 public class Flashlight extends ContextWrapper implements SurfaceHolder.Callback {
 
+    private Camera mCamera = null;
     private CameraSurfaceHelpers mCameraSurfaceHelpers = null;
     private FlashlightHelpers mFlashlightHelpers = null;
     private ArrayList<CameraStateChangeListener> mListeners = null;
@@ -46,8 +47,8 @@ public class Flashlight extends ContextWrapper implements SurfaceHolder.Callback
 
     public synchronized void initializeCamera() {
         try {
-            Camera camera = Camera.open();
-            mFlashlightHelpers = new FlashlightHelpers(camera);
+            mCamera = Camera.open();
+            mFlashlightHelpers = new FlashlightHelpers(mCamera);
             mCameraStateListenerHelpers.dispatchEventOnCameraOpened(mListeners);
         } catch (RuntimeException e) {
             mCameraStateListenerHelpers.dispatchEventOnCameraBusy(mListeners);
@@ -57,17 +58,17 @@ public class Flashlight extends ContextWrapper implements SurfaceHolder.Callback
     }
 
     public synchronized void turnOn() {
-        FlashlightGlobals.setIsFlashlightOn(true);
         mFlashlightHelpers.setCameraModeTorch(true);
         mFlashlightHelpers.startCameraPreview(true);
+        FlashlightGlobals.setIsFlashlightOn(true);
         mCameraStateListenerHelpers.dispatchEventOnFlashlightTurnedOn(mListeners);
     }
 
     public synchronized void turnOff() {
         mFlashlightHelpers.setCameraModeTorch(false);
         mFlashlightHelpers.startCameraPreview(false);
-        mCameraStateListenerHelpers.dispatchEventOnFlashlightTurnedOff(mListeners);
         FlashlightGlobals.setIsFlashlightOn(false);
+        mCameraStateListenerHelpers.dispatchEventOnFlashlightTurnedOff(mListeners);
     }
 
     public synchronized void releaseAllResources() {
@@ -78,18 +79,20 @@ public class Flashlight extends ContextWrapper implements SurfaceHolder.Callback
     }
 
     private void clearResources() {
-        mFlashlightHelpers.releaseCamera();
+        if (mCamera != null) {
+            mFlashlightHelpers.releaseCamera();
+        }
         mCameraSurfaceHelpers.destroyDummyViewSurface();
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mFlashlightHelpers.setCameraPreviewDisplay(CameraSurfaceHelpers.getHolder());
-        mCameraStateListenerHelpers.dispatchEventOnCameraViewSetup(mListeners);
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        mCameraStateListenerHelpers.dispatchEventOnCameraViewSetup(mListeners);
     }
 
     @Override
