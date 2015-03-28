@@ -58,7 +58,6 @@ public class Flashlight extends ContextWrapper implements SurfaceHolder.Callback
 
     public synchronized void turnOn() {
         FlashlightGlobals.setIsFlashlightOn(true);
-        mFlashlightHelpers.setCameraPreviewDisplay(CameraSurfaceHelpers.getHolder());
         mFlashlightHelpers.setCameraModeTorch(true);
         mFlashlightHelpers.startCameraPreview(true);
         mCameraStateListenerHelpers.dispatchEventOnFlashlightTurnedOn(mListeners);
@@ -85,6 +84,7 @@ public class Flashlight extends ContextWrapper implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        mFlashlightHelpers.setCameraPreviewDisplay(CameraSurfaceHelpers.getHolder());
         mCameraStateListenerHelpers.dispatchEventOnCameraViewSetup(mListeners);
     }
 
