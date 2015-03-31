@@ -24,7 +24,7 @@ public class CameraStateListenerHelpers {
 
     void dispatchEventOnCameraOpened(ArrayList<CameraStateChangeListener>  listeners) {
         for (CameraStateChangeListener listener : listeners) {
-            listener.onCameraOpened();
+            listener.onCameraInitialized();
         }
     }
 
@@ -37,18 +37,6 @@ public class CameraStateListenerHelpers {
     void dispatchEventOnCameraBusy(ArrayList<CameraStateChangeListener>  listeners) {
         for (CameraStateChangeListener listener : listeners) {
             listener.onCameraBusy();
-        }
-    }
-
-    void dispatchEventOnFlashlightTurnedOn(ArrayList<CameraStateChangeListener>  listeners) {
-        for (CameraStateChangeListener listener : listeners) {
-            listener.onFlashlightTurnedOn();
-        }
-    }
-
-    void dispatchEventOnFlashlightTurnedOff(ArrayList<CameraStateChangeListener>  listeners) {
-        for (CameraStateChangeListener listener : listeners) {
-            listener.onFlashlightTurnedOff();
         }
     }
 }

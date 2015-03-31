@@ -45,11 +45,11 @@ public class MainActivity extends ActionBarActivity implements ToggleButton.OnCh
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         if (!FlashlightGlobals.isResourceOccupied()) {
-            mFlashlight.setOnCameraStateChangedListener(this);
-            mFlashlight.initializeCamera();
+            mFlashlight.setCameraStateChangedListener(this);
+            mFlashlight.setupCameraPreview();
         }
     }
 
@@ -80,7 +80,12 @@ public class MainActivity extends ActionBarActivity implements ToggleButton.OnCh
         switch (buttonView.getId()) {
             case R.id.flashlightToggle:
                 if (isChecked) {
-                    mFlashlight.turnOn();
+                    if (!FlashlightGlobals.isResourceOccupied()) {
+                        mFlashlight.setupCameraPreview();
+                        mFlashlight.turnOn();
+                    } else {
+                        mFlashlight.turnOn();
+                    }
                 } else {
                     mFlashlight.turnOff();
                 }
@@ -89,7 +94,7 @@ public class MainActivity extends ActionBarActivity implements ToggleButton.OnCh
     }
 
     @Override
-    public void onCameraOpened() {
+    public void onCameraInitialized() {
         mFlashlightToggle.setEnabled(true);
     }
 
@@ -103,15 +108,5 @@ public class MainActivity extends ActionBarActivity implements ToggleButton.OnCh
         Toast busyToast = Toast.makeText(getApplicationContext(),
                 "Flashlight resource is busy", Toast.LENGTH_LONG);
         busyToast.show();
-    }
-
-    @Override
-    public void onFlashlightTurnedOn() {
-
-    }
-
-    @Override
-    public void onFlashlightTurnedOff() {
-
     }
 }

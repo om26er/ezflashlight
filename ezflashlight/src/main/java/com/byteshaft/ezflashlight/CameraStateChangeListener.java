@@ -20,14 +20,10 @@ package com.byteshaft.ezflashlight;
 
 public interface CameraStateChangeListener {
 
-    public void onCameraOpened();
+    public void onCameraInitialized();
 
     public void onCameraViewSetup();
 
     public void onCameraBusy();
-
-    public void onFlashlightTurnedOn();
-
-    public void onFlashlightTurnedOff();
 
 }

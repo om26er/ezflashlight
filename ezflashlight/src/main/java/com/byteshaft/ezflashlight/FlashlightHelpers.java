@@ -27,9 +27,11 @@ import java.io.IOException;
 public class FlashlightHelpers {
 
     private Camera mCamera = null;
+    private Camera.Parameters mParams = null;
 
     public FlashlightHelpers(Camera camera) {
         mCamera = camera;
+        mParams = mCamera.getParameters();
     }
 
     void setCameraPreviewDisplay(SurfaceHolder holder) {
@@ -41,7 +43,6 @@ public class FlashlightHelpers {
     }
 
     void setCameraModeTorch(boolean ON) {
-        Camera.Parameters mParams = mCamera.getParameters();
         if (ON) {
             mParams.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             mCamera.setParameters(mParams);
@@ -51,12 +52,8 @@ public class FlashlightHelpers {
         }
     }
 
-    void startCameraPreview(boolean start) {
-        if (start) {
-            mCamera.startPreview();
-        } else {
-            mCamera.stopPreview();
-        }
+    void startCameraPreview() {
+        mCamera.startPreview();
     }
 
     void releaseCamera() {

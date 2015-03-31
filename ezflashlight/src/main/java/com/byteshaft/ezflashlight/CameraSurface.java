@@ -27,33 +27,28 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
-public class CameraSurfaceHelpers extends ContextWrapper {
+public class CameraSurface extends ContextWrapper {
 
-    private static SurfaceHolder sSurfaceHolder = null;
     private Flashlight mFlashlight = null;
     private WindowManager mWindowManager = null;
     private SurfaceView mDummyPreview = null;
 
-    public CameraSurfaceHelpers(Flashlight flashlight) {
+    public CameraSurface(Flashlight flashlight) {
         super(flashlight);
         mFlashlight = flashlight;
     }
 
-    static SurfaceHolder getHolder() {
-        return sSurfaceHolder;
-    }
-
-    void setupCameraPreviewForTorch() {
+    void create() {
         mDummyPreview = getDummySurface();
-        sSurfaceHolder = getHolderForPreview(mDummyPreview);
+        SurfaceHolder holder = getHolderForPreview(mDummyPreview);
         setColorForPreview(mDummyPreview);
-        setupCompatibilityForPreHoneycombDevices(sSurfaceHolder);
-        addCallbackForHolder(sSurfaceHolder);
+        setupCompatibilityForPreHoneycombDevices(holder);
+        addCallbackForHolder(holder);
         createSystemOverlayForPreview(mDummyPreview);
         FlashlightGlobals.setIsResourceOccupied(true);
     }
 
-    void destroyDummyViewSurface() {
+    void destroy() {
         if (mWindowManager != null && mDummyPreview != null) {
             mWindowManager.removeView(mDummyPreview);
             mDummyPreview = null;
