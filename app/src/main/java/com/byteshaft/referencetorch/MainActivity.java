@@ -18,6 +18,7 @@
 
 package com.byteshaft.referencetorch;
 
+import android.hardware.Camera;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.widget.CompoundButton;
@@ -99,7 +100,7 @@ public class MainActivity extends ActionBarActivity implements ToggleButton.OnCh
     }
 
     @Override
-    public void onCameraViewSetup() {
+    public void onCameraViewSetup(Camera camera) {
 
     }
 
