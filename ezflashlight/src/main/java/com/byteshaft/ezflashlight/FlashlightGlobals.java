@@ -20,8 +20,8 @@ package com.byteshaft.ezflashlight;
 
 public class FlashlightGlobals {
 
-    private static boolean isFlashlightOn = false;
-    private static boolean isResourceOccupied = false;
+    private static boolean isFlashlightOn;
+    private static boolean isResourceOccupied;
 
     static void setIsFlashlightOn(boolean on) {
         isFlashlightOn = on;

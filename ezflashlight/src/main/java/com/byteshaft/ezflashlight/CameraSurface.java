@@ -29,9 +29,9 @@ import android.view.WindowManager;
 
 public class CameraSurface extends ContextWrapper {
 
-    private Flashlight mFlashlight = null;
-    private WindowManager mWindowManager = null;
-    private SurfaceView mDummyPreview = null;
+    private Flashlight mFlashlight;
+    private WindowManager mWindowManager;
+    private SurfaceView mDummyPreview;
 
     public CameraSurface(Flashlight flashlight) {
         super(flashlight);

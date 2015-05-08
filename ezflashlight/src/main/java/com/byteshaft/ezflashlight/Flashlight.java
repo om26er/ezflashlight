@@ -29,10 +29,10 @@ import java.util.ArrayList;
 public class Flashlight extends ContextWrapper implements SurfaceHolder.Callback {
 
     private Camera mCamera;
-    private CameraSurface mCameraSurface = null;
-    private FlashlightHelpers mFlashlightHelpers = null;
-    private ArrayList<CameraStateChangeListener> mListeners = null;
-    private CameraStateListenerHelpers mCameraStateListenerHelpers = null;
+    private CameraSurface mCameraSurface;
+    private FlashlightHelpers mFlashlightHelpers;
+    private ArrayList<CameraStateChangeListener> mListeners;
+    private CameraStateListenerHelpers mCameraStateListenerHelpers;
 
     public Flashlight(Context context) {
         super(context);

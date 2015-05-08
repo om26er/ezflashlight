@@ -26,8 +26,8 @@ import java.io.IOException;
 @SuppressWarnings("deprecation")
 public class FlashlightHelpers {
 
-    private Camera mCamera = null;
-    private Camera.Parameters mParams = null;
+    private Camera mCamera;
+    private Camera.Parameters mParams;
 
     public FlashlightHelpers(Camera camera) {
         mCamera = camera;
