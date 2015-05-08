@@ -18,6 +18,8 @@
 
 package com.byteshaft.ezflashlight;
 
+import android.hardware.Camera;
+
 import java.util.ArrayList;
 
 public class CameraStateListenerHelpers {
@@ -28,9 +30,10 @@ public class CameraStateListenerHelpers {
         }
     }
 
-    void dispatchEventOnCameraViewSetup(ArrayList<CameraStateChangeListener>  listeners) {
+    void dispatchEventOnCameraViewSetup(ArrayList<CameraStateChangeListener>  listeners,
+                                        Camera camera) {
         for (CameraStateChangeListener listener : listeners) {
-            listener.onCameraViewSetup();
+            listener.onCameraViewSetup(camera);
         }
     }
 

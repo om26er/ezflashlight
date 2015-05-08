@@ -18,11 +18,13 @@
 
 package com.byteshaft.ezflashlight;
 
+import android.hardware.Camera;
+
 public interface CameraStateChangeListener {
 
     public void onCameraInitialized();
 
-    public void onCameraViewSetup();
+    public void onCameraViewSetup(Camera camera);
 
     public void onCameraBusy();
 

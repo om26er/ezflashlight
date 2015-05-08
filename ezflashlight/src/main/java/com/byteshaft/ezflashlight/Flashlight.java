@@ -28,6 +28,7 @@ import java.util.ArrayList;
 @SuppressWarnings("deprecation")
 public class Flashlight extends ContextWrapper implements SurfaceHolder.Callback {
 
+    private Camera mCamera;
     private CameraSurface mCameraSurface = null;
     private FlashlightHelpers mFlashlightHelpers = null;
     private ArrayList<CameraStateChangeListener> mListeners = null;
@@ -46,9 +47,9 @@ public class Flashlight extends ContextWrapper implements SurfaceHolder.Callback
 
     public void setupCameraPreview() {
         try {
-            Camera camera = Camera.open();
+            mCamera = Camera.open();
             mCameraStateListenerHelpers.dispatchEventOnCameraOpened(mListeners);
-            mFlashlightHelpers = new FlashlightHelpers(camera);
+            mFlashlightHelpers = new FlashlightHelpers(mCamera);
             mCameraSurface.create();
         } catch (RuntimeException ignore) {
             mCameraStateListenerHelpers.dispatchEventOnCameraBusy(mListeners);
@@ -83,7 +84,7 @@ public class Flashlight extends ContextWrapper implements SurfaceHolder.Callback
     public void surfaceCreated(SurfaceHolder holder) {
         mFlashlightHelpers.setCameraPreviewDisplay(holder);
         mFlashlightHelpers.startCameraPreview();
-        mCameraStateListenerHelpers.dispatchEventOnCameraViewSetup(mListeners);
+        mCameraStateListenerHelpers.dispatchEventOnCameraViewSetup(mListeners, mCamera);
     }
 
     @Override
